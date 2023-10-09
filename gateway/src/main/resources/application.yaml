@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: gateway-service
+  main:
+    web-application-type: reactive
+
+server:
+  port: 8082
+
+spring.cloud.gateway:
+  globalcors:
+    corsConfigurations:
+      '[/**]':
+        allowedOrigins: '*'
+        allowedMethods: '*'
+        allowedHeaders:
+          - '*'
+
+  routes:
+    - id: generator-service
+      uri: http://localhost:7889
+      predicates:
+        - Path=/generator/**
+    - id: validator-service
+      uri: http://localhost:7890
+      predicates:
+        - Path=/validator/**
