@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-
+import Col from 'react-bootstrap/Col';
 
 function TokenGenerator({ onTokenGenerated }) {
   const [digits, setDigits] = useState('');
@@ -23,39 +22,39 @@ function TokenGenerator({ onTokenGenerated }) {
     }
   };
 
-  return (
-    // <div className="token-generator">
-    //   <div className="input-container">
-    //     <label>Generate Token</label>
-    //     <input
-    //       type="text"
-    //       value={digits}
-    //       onChange={(e) => setDigits(e.target.value)}
-    //     />
-    //   </div>
-    //   <div className="button-container">
-    //     <button onClick={generateToken}>Generate</button>
-    //   </div>
-    //   <p>Generated Token: {generatedToken.token}</p>
-    // </div>
+  // Handle input change and enforce digit-only and comma insertion
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove non-digits and commas
+    const sanitizedValue = inputValue.replace(/[^0-9,]/g, '');
+    // Ensure a comma is inserted after entering a single digit
+    const formattedValue = sanitizedValue.replace(/(\d)(?=(\d{1})+(?!\d))/g, '$1,');
+    setDigits(formattedValue);
+  };
 
-    <form>
-      <div className="mb-6">
-        <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-        <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
-      </div>
-      <div className="mb-6">
-        <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-        <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
-      </div>
-      <div className="flex items-start mb-6">
-        <div className="flex items-center h-5">
-          <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required/>
-        </div>
-        <label for="remember" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
-      </div>
-      <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    </form>
+  return (
+      <Row className="justify-content-center">
+        <Col xs={12} sm={8} md={6}>
+          <Row className="mb-3">
+            <Form.Label column sm={3}>
+              Generate Token
+            </Form.Label>
+            <Col sm={9}>
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter digits (0-9)"
+                  value={digits}
+                  onChange={handleInputChange}
+                />
+                <Button variant="primary" onClick={generateToken}>
+                  Generate
+                </Button>
+              </InputGroup>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
   );
 }
 
