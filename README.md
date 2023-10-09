@@ -52,7 +52,7 @@ Before diving into this project, ensure you have the following prerequisites in 
    ```shell
    git clone https://github.com/your-username/microservices-project.git
 
-2. There is start.sh for (macOS and Linux) and start.bat for windows scripts file use to run all service.
+2. There is start.sh for (macOS and Linux) and start.bat for windows scripts file use to run all service. Make sure start.sh or start.bat has execution rights, if not Run chmod a+x start.sh command.
 
 ### Usage
 You can interact with the services through the following API endpoints:
